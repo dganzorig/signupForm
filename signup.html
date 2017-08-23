@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+ 
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Submit Form</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+ 
+    <style type="text/css">
+        body, html {
+            min-width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .formCon {
+            background-color: rgba(0, 0, 0, 0.2);
+            width: 50%;
+            margin: 8vh auto 0 auto;
+            text-align: center;
+        }
+        .formCon > h1 {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 100;
+        }
+
+        .formCon > #signupForm > button {
+            width: 70%;
+            height: 3.5em;
+            border: none;
+            font-size: 1.2em;
+            background-color: rgba(69, 69, 69, 0.75);
+            color: rgba(255, 255, 255, 0.7);
+            outline: none;
+            margin-bottom: 20px;
+        }
+        .formCon > #signupForm > button:hover {
+            cursor: pointer;
+            background-color: rgba(69, 69, 69, 0.9);
+        }
+        .formCon > #signupForm > .input-icon-wrap {
+            position: relative;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.6);
+            color: #282828;
+            padding-top: 0.6em;
+            width: 70%;
+        }
+        .formCon > #signupForm > .input-icon-wrap:focus-within {
+            background-color: rgba(255, 255, 255, 0.72);
+        }
+        .formCon > #signupForm > .input-icon-wrap:-webkit-autofill,
+        .formCon > #signupForm > .input-icon-wrap:-webkit-autofill:hover,
+        .formCon > #signupForm > .input-icon-wrap:-webkit-autofill:focus,
+        .formCon > #signupForm > .input-icon-wrap:-webkit-autofill:active {
+            -webkit-animation-name: autofill;
+            -webkit-animation-fill-mode: both;
+        }
+        .formCon > #signupForm > .input-icon-wrap > input {
+            display: inline-block;
+            width: 80%;
+            max-width: 500px;
+            height: 3.5em;
+            border: none;
+            font-size: 1em;
+            text-indent: 2em;
+            background-color: rgba(0,0,0,0);
+        }
+        .formCon > #signupForm > .input-icon-wrap > input:focus {
+            outline: none;
+        }
+        .formCon > #signupForm > .input-icon-wrap > .requirements {
+            display:none;
+            transition: 0.9s;
+            overflow: hidden;
+            font-style: italic;
+            font-size: 0.8em;
+            color: #696969;
+            text-align: left;
+            padding-left: 8vw;
+            margin: -1.5em 0 0 0;
+            padding-bottom: 1em;
+        }
+        .formCon > #signupForm > .input-icon-wrap > .requirements > ul > li.valid {
+            color: rgb(37,155,51);
+        }
+        .formCon > #signupForm > .input-icon-wrap > .requirements > ul > li.invalid {
+            color: rgb(160,35,28);
+        }
+        .formCon > #signupForm > .input-icon-wrap:not(:nth-of-type(5)):after {
+            content : "";
+            position: absolute;
+            left    : 7.5%;
+            bottom  : 0;
+            height  : 1px;
+            width   : 85%;  /* or 100px */
+            border-bottom:1px solid grey;
+        }
+        .formCon .input-icon-wrap > .fa {
+            display: inline-block;
+            font-size: 1.8em;
+            height: 2em;
+        }
+        .formPadding {
+            padding: 30px;
+        }
+        html {
+            background: #5f2c82; /* fallback for old browsers */
+              background: -webkit-linear-gradient(to right, #5f2c82, #49a09d) no-repeat; /* Chrome 10-25, Safari 5.1-6 */
+              background: linear-gradient(to right, #5f2c82, #49a09d) no-repeat; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+             font-family: 'Roboto', sans-serif;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active { /*override webkite yellow autocomplete background */
+            -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+            -webkit-transition-delay: 9999s;
+        }
+        #submitBtn:disabled {
+            display:none;
+        }
+        .uppercase { text-transform: uppercase; }
+        @media only screen and (max-width: 767px) {
+            .formCon {
+                width: 65%;
+            }
+            .formCon > #signupForm > button {
+                width: 80%;
+            }
+            .formCon > #signupForm > .input-icon-wrap {
+                width: 80%;
+            }
+        }
+        @media only screen and (max-width: 479px) {
+            .formCon {
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .formCon > #signupForm > button {
+                width: 100%;
+            }
+            .formCon > #signupForm > .input-icon-wrap {
+                width: 100%;
+            }
+        }
+    </style>
+ 
+    <body>
+        <div class="formCon formPadding">
+            <h1 class="uppercase">Sign Up</h1>
+            <form id="signupForm" name="signupForm" method="post" novalidate>
+                <div class="input-icon-wrap">
+                    <span class="fa fa-user"></span>
+                    <input type="text" name="firstName" placeholder="First Name" required data-value-missing="This field is required!" onkeypress="altTab(event)">
+                    <div class="requirements">
+                        <ul>
+                            <li>Length must be at least 2</li>
+                            <li>Must only contain letters</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-icon-wrap">
+                    <span class="fa fa-user-o"></span>
+                    <input type="text" name="lastName" placeholder= "Last Name" required data-value-missing="This field is required!" onkeypress="altTab(event)">
+                    <div class="requirements">
+                        <ul>
+                            <li>Length must be at least 2</li>
+                            <li>Must only contain letters</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-icon-wrap">
+                    <span class="fa fa-envelope-open"></span>
+                    <input type="email" name="email" placeholder="Email" required data-value-missing="This field is required!" onkeypress="altTab(event)">
+                    <div class="requirements">
+                        <ul>
+                            <li>Must match email pattern.</li>
+                        <ul>
+                    </div>
+                </div>
+                <div class="input-icon-wrap">
+                    <span class="fa fa-lock"></span>
+                    <input type="password" name="password" placeholder="Password" required data-value-missing="This field is required!" pattern="/^.{6,}$/" data-pattern-mismatch="Must be at least 6 characters" onkeypress="altTab(event)">
+                    <div class="requirements">
+                        <ul>
+                            <li>At least 8 and at most 50 in length</li>
+                            <li>At least one number</li>
+                            <li>At least one lowercase letter</li>
+                            <li>At least one uppercase letter</li>
+                            <li>At least one of the following special characters: !@#$%^&*</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-icon-wrap">
+                    <span class="fa fa-lock"></span>
+                    <span class="fa fa-lock"></span>
+                    <input type="password" name="passwordAgain" placeholder="Confirm Password" required data-value-missing="This field is required!" onkeypress="altTab(event)">
+                    <div class="requirements">
+                        <ul>
+                            <li>Must match first password input</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="submit" class="uppercase" id="submitBtn" onkeypress="altTab(event)" disabled="disabled">Submit</button>
+            </form>
+        </div>
+    </body>
+ 
+    <script>
+        function altTab(e) {
+            if(e.keyCode == 13) {
+                e.preventDefault();
+                var nextParentSibling = $(e.target).parent().next();
+                if(nextParentSibling.attr('id') != 'submitBtn') {
+                    nextParentSibling.find('input').focus();
+                } else {
+                    $('#submitBtn').trigger('click');
+                }
+            }
+        } 
+
+        $(window).on('load', function() {
+            $('form,input,select,textarea').attr("autocomplete", "off");
+            $(' .formCon > #signupForm > .input-icon-wrap > input').on('focus', function() {
+                $(this).parent().find('.requirements').css('display', 'block');
+            });
+            $(' .formCon > #signupForm > .input-icon-wrap > input').on('focusout', function() {
+                $(this).parent().find('.requirements').css('display', 'none');
+            });
+        });
+
+        function isEmpty(input) {
+            return (input.value.trim() == '') ? true : false;
+        }
+        function CustomValidation() {
+            this.invalidities=[];
+            this.validityChecks = [];
+        }
+
+        CustomValidation.prototype = {
+            addInvalidity: function(message) {
+                this.invalidities.push(message);
+            },
+            getInvalidities: function() {
+                return this.invalidities.join('. \n');
+            },
+            checkInvalidity: function(input) {
+                for(var i = 0; i < this.validityChecks.length; i++) {
+                    var isInvalid = this.validityChecks[i].isInvalid(input);
+                    if(isEmpty(input)) {
+                        this.validityChecks[i].element.classList.remove('invalid');
+                        this.validityChecks[i].element.classList.remove('valid');
+                    }
+                    else if(isInvalid) {
+                        this.addInvalidity(this.validityChecks[i].invalidityMessage);
+                        this.validityChecks[i].element.classList.add('invalid');
+                        this.validityChecks[i].element.classList.remove('valid');
+                    } else /*!is valid*/ {
+                        this.validityChecks[i].element.classList.remove('invalid');
+                        this.validityChecks[i].element.classList.add('valid');
+                    }
+                }
+            }
+        }
+
+        var firstNameValidityChecks = [
+            {
+                isInvalid: function(input) {
+                    return input.value.length < 2;
+                },
+                invalidityMessage: 'This input needs to be at least 2 characters long',
+                element: document.querySelectorAll('.requirements')[0].querySelectorAll('ul > li')[0]
+            },
+            {
+                isInvalid: function(input) {
+                    var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
+                    return illegalCharacters ? true : false;
+                },
+                invalidityMessage: 'This input can only have letters',
+                element: document.querySelectorAll('.requirements')[0].querySelectorAll('ul > li')[1]
+            }
+        ]
+
+        var lastNameValidityChecks = [
+            {
+                isInvalid: function(input) {
+                    return input.value.length < 2;
+                },
+                invalidityMessage: 'This input needs to be at least 2 characters long',
+                element: document.querySelectorAll('.requirements')[1].querySelectorAll('ul > li')[0]
+            },
+            {
+                isInvalid: function(input) {
+                    var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
+                    return illegalCharacters ? true : false;
+                },
+                invalidityMessage: 'This input can only have letters',
+                element: document.querySelectorAll('.requirements')[1].querySelectorAll('ul > li')[1]
+            }
+        ]
+
+        var emailValidityChecks = [
+            {
+                isInvalid: function(input) {
+                    return !input.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+                },
+                invalidityMessage: 'Must be a valid email',
+                element: document.querySelectorAll('.requirements')[2].querySelectorAll('ul > li')[0]
+            }
+        ]
+
+        var passwordValidityChecks = [
+            {
+                isInvalid: function(input) {
+                    return input.value.length < 8 | input.value.length > 50;
+                },
+                invalidityMessage: 'This input needs to be at least 8 characters and at most 50 characters',
+                element: document.querySelectorAll('.requirements')[3].querySelectorAll('ul > li')[0]
+            },
+            {
+                isInvalid: function(input) {
+                    return !input.value.match(/[0-9]/g);
+                },
+                invalidityMessage: 'At least one number is required',
+                element: document.querySelectorAll('.requirements')[3].querySelectorAll('ul > li')[1]
+            },
+            {
+                isInvalid: function(input) {
+                    return !input.value.match(/[a-z]/g);
+                },
+                invalidityMessage: 'At least one lowercase character is required',
+                element: document.querySelectorAll('.requirements')[3].querySelectorAll('ul > li')[2]
+            },
+            {
+                isInvalid: function(input) {
+                    return !input.value.match(/[A-Z]/g);
+                },
+                invalidityMessage: 'At least one uppercase character is required',
+                element: document.querySelectorAll('.requirements')[3].querySelectorAll('ul > li')[3]
+            },
+            {
+                isInvalid: function(input) {
+                    return !input.value.match(/[\!\@\#\$\%\^\&\*]/g);
+                },
+                invalidityMessage: 'You need one of the required special characters',
+                element: document.querySelectorAll('.requirements')[3].querySelectorAll('ul > li')[4]
+            }
+        ]
+
+        var passwordAgainValidityChecks = [
+            {
+                isInvalid: function() {
+                    return passwordAgainInput.value != passwordInput.value;
+                },
+                invalidityMessage: 'This password needs to match the first one',
+                element: document.querySelectorAll('.requirements')[4].querySelectorAll('ul > li')[0]
+            }
+        ]
+
+        function checkValidity(input) {
+            input.CustomValidation.invalidities = [];
+            input.CustomValidation.checkInvalidity(input);
+            if(input.CustomValidation.invalidities.length == 0 && input.value != '') {
+                input.setCustomValidity('');
+            } else {
+                var message = input.CustomValidation.getInvalidities();
+                input.setCustomValidity(message);
+            }
+        }
+
+        function inputHasClass(input, className) {
+            var items = input.parentNode.querySelectorAll('ul > li');
+            for(var i = 0; i < items.length; i++) {
+                if(items[i].classList.contains(className))
+                    return true;
+            }
+            return false;
+        }
+
+        var firstNameInput = document.querySelector('input[name="firstName"]');
+        var lastNameInput = document.querySelector('input[name="lastName"]');
+        var emailInput = document.querySelector('input[name="email"]');
+        var passwordInput = document.querySelector('input[name="password"]');
+        var passwordAgainInput = document.querySelector('input[name="passwordAgain"]');
+
+        firstNameInput.CustomValidation = new CustomValidation();
+        firstNameInput.CustomValidation.validityChecks = firstNameValidityChecks;
+
+        lastNameInput.CustomValidation = new CustomValidation();
+        lastNameInput.CustomValidation.validityChecks = lastNameValidityChecks;
+
+        emailInput.CustomValidation = new CustomValidation();
+        emailInput.CustomValidation.validityChecks = emailValidityChecks;
+
+        passwordInput.CustomValidation = new CustomValidation();
+        passwordInput.CustomValidation.validityChecks = passwordValidityChecks;
+
+        passwordAgainInput.CustomValidation = new CustomValidation();
+        passwordAgainInput.CustomValidation.validityChecks = passwordAgainValidityChecks;
+
+        var inputs = document.querySelectorAll('input');
+        for(var i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('keyup', function() {
+                checkValidity(this);
+                if(inputHasClass(this, 'invalid')) {
+                    this.parentElement.style.boxShadow = 'inset 0 0 15px rgba(209, 33, 33, 0.6)';
+                } else if(inputHasClass(this, 'valid')) {
+                    this.parentElement.style.boxShadow = 'inset 0 0 15px rgba(38, 137, 37, 0.6)';
+                } else {
+                    this.parentElement.style.boxShadow = 'none';
+                }
+            });
+        }
+
+        var form = document.getElementById('signupForm');
+        form.addEventListener('keyup', function() {
+            var allGood = true;
+            var inputs = form.querySelectorAll('input');
+            for(var i = 0; i < inputs.length; i++) {
+                if(!inputHasClass(inputs[i], 'valid'))
+                    allGood = false;
+            } 
+            document.getElementById('submitBtn').disabled = allGood ? false : true;
+        });     
+
+        var submitBtn = document.querySelector('#submitBtn');
+        submitBtn.addEventListener('click', function(e) {
+            for(var i = 0; i < inputs.length; i++) {
+                checkValidity(inputs[i]);
+            }
+        });
+    </script>
+</html>
