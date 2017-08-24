@@ -26,6 +26,7 @@
        .formCon > h1 {
            color: rgba(255, 255, 255, 0.7);
            font-weight: 100;
+           -webkit-font-smoothing: antialiased;
        }
        .formCon > #signupForm > button {
            width: 70%;
@@ -73,8 +74,8 @@
            outline: none;
        }
        .formCon > #signupForm > .input-icon-wrap > .requirements {
-           display:none;
-           transition: 0.9s;
+           max-height: 0px;
+           transition: 0.6s;
            overflow: hidden;
            font-style: italic;
            font-size: 0.8em;
@@ -269,10 +270,10 @@
        $(window).on('load', function() {
            $('form,input,select,textarea').attr("autocomplete", "off");
            $(' .formCon > #signupForm > .input-icon-wrap > input').on('focus', function() {
-               $(this).parent().find('.requirements').css('display', 'block');
+               $(this).parent().find('.requirements').css('max-height', '500px');
            });
            $(' .formCon > #signupForm > .input-icon-wrap > input').on('focusout', function() {
-               $(this).parent().find('.requirements').css('display', 'none');
+               $(this).parent().find('.requirements').css('max-height', '0');
            });
        });
        function isEmpty(input) {
