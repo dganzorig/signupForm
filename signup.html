@@ -122,12 +122,18 @@
            width   : 85%;  /* or 100px */
            border-bottom:1px solid grey;
        }
+       .formCon > #signupForm > .input-icon-wrap.invalid {
+           box-shadow: inset 0 0 25px rgba(209, 33, 33, 0.75); 
+       }
        .formCon > #signupForm > .input-icon-wrap.invalid > .fa:after {
             font-family: 'FontAwesome';
             content: '\f057';
             color: rgb(160,35,28);
             margin-right: -20px;
             font-size: 0.75em;
+       }
+       .formCon > #signupForm > .input-icon-wrap.valid {
+           box-shadow: inset 0 0 25px rgba(38, 137, 37, 0.75);
        }
        .formCon > #signupForm > .input-icon-wrap.valid > .fa:after {
         font-family: 'FontAwesome';
@@ -434,15 +440,12 @@
            inputs[i].addEventListener('keyup', function() {
                checkValidity(this);
                if(inputHasClass(this, 'invalid')) {
-                   this.parentElement.style.boxShadow = 'inset 0 0 25px rgba(209, 33, 33, 0.75)';
                    this.parentElement.classList.add('invalid');
                    this.parentElement.classList.remove('valid');
                } else if(inputHasClass(this, 'valid')) {
-                   this.parentElement.style.boxShadow = 'inset 0 0 25px rgba(38, 137, 37, 0.75)';
                    this.parentElement.classList.remove('invalid');
                    this.parentElement.classList.add('valid');
                } else {
-                   this.parentElement.style.boxShadow = 'none';
                    this.parentElement.classList.remove('invalid');
                    this.parentElement.classList.remove('valid');
                }
