@@ -122,6 +122,20 @@
            width   : 85%;  /* or 100px */
            border-bottom:1px solid grey;
        }
+       .formCon > #signupForm > .input-icon-wrap.invalid > .fa:after {
+            font-family: 'FontAwesome';
+            content: '\f057';
+            color: rgb(160,35,28);
+            margin-right: -20px;
+            font-size: 0.75em;
+       }
+       .formCon > #signupForm > .input-icon-wrap.valid > .fa:after {
+        font-family: 'FontAwesome';
+            content: '\f058';
+            color: rgb(37,155,51);
+            margin-right: -20px;
+            font-size: 0.75em;
+       }
        .formCon .input-icon-wrap > .fa {
            display: inline-block;
            font-size: 1.8em;
@@ -180,6 +194,7 @@
                <div class="input-icon-wrap">
                    <span class="fa fa-user"></span>
                    <input type="text" name="firstName" placeholder="First Name" required data-value-missing="This field is required!" onkeypress="altTab(event)">
+
                    <div class="requirements">
                        <ul>
                            <li>Length must be at least 2</li>
@@ -398,29 +413,42 @@
        var emailInput = document.querySelector('input[name="email"]');
        var passwordInput = document.querySelector('input[name="password"]');
        var passwordAgainInput = document.querySelector('input[name="passwordAgain"]');
+
        firstNameInput.CustomValidation = new CustomValidation();
        firstNameInput.CustomValidation.validityChecks = firstNameValidityChecks;
+
        lastNameInput.CustomValidation = new CustomValidation();
        lastNameInput.CustomValidation.validityChecks = lastNameValidityChecks;
+
        emailInput.CustomValidation = new CustomValidation();
        emailInput.CustomValidation.validityChecks = emailValidityChecks;
+
        passwordInput.CustomValidation = new CustomValidation();
        passwordInput.CustomValidation.validityChecks = passwordValidityChecks;
+
        passwordAgainInput.CustomValidation = new CustomValidation();
        passwordAgainInput.CustomValidation.validityChecks = passwordAgainValidityChecks;
+
        var inputs = document.querySelectorAll('input');
        for(var i = 0; i < inputs.length; i++) {
            inputs[i].addEventListener('keyup', function() {
                checkValidity(this);
                if(inputHasClass(this, 'invalid')) {
                    this.parentElement.style.boxShadow = 'inset 0 0 25px rgba(209, 33, 33, 0.75)';
+                   this.parentElement.classList.add('invalid');
+                   this.parentElement.classList.remove('valid');
                } else if(inputHasClass(this, 'valid')) {
                    this.parentElement.style.boxShadow = 'inset 0 0 25px rgba(38, 137, 37, 0.75)';
+                   this.parentElement.classList.remove('invalid');
+                   this.parentElement.classList.add('valid');
                } else {
                    this.parentElement.style.boxShadow = 'none';
+                   this.parentElement.classList.remove('invalid');
+                   this.parentElement.classList.remove('valid');
                }
            });
        }
+
        var form = document.getElementById('signupForm');
        form.addEventListener('keyup', function() {
            var allGood = true;
@@ -430,7 +458,8 @@
                    allGood = false;
            } 
            document.getElementById('submitBtn').disabled = allGood ? false : true;
-       });     
+       });    
+
        var submitBtn = document.querySelector('#submitBtn');
        submitBtn.addEventListener('click', function(e) {
            for(var i = 0; i < inputs.length; i++) {
