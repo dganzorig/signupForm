@@ -75,13 +75,13 @@
        }
        .formCon > #signupForm > .input-icon-wrap > .requirements {
            max-height: 0px;
-           transition: 0.6s;
+           transition: 0.3s ease-in-out;
            overflow: hidden;
            font-style: italic;
            font-size: 0.8em;
            color: #696969;
            text-align: left;
-           padding-left: 8vw;
+           padding-left: calc(15px + 2.5vw);
            margin: -1.5em 0 0 0;
            padding-bottom: 1em;
        }
@@ -153,8 +153,8 @@
        }
        html {
            background: #5f2c82; /* fallback for old browsers */
-             background: -webkit-linear-gradient(to right, #5f2c82, #49a09d) no-repeat; /* Chrome 10-25, Safari 5.1-6 */
-             background: linear-gradient(to right, #5f2c82, #49a09d) no-repeat; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+             background: -webkit-linear-gradient(to top left, #5f2c82, #49a09d) no-repeat; /* Chrome 10-25, Safari 5.1-6 */
+             background: linear-gradient(to top left, #5f2c82, #49a09d) no-repeat; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
             font-family: 'Roboto', sans-serif;
        }
        input:-webkit-autofill,
@@ -205,7 +205,7 @@
                    <div class="requirements">
                        <ul>
                            <li>Length must be at least 2</li>
-                           <li>Must only contain letters</li>
+                           <li>Must only contain letters, apostrophes ('), and up to one dash (-)</li>
                        </ul>
                    </div>
                </div>
@@ -215,7 +215,7 @@
                    <div class="requirements">
                        <ul>
                            <li>Length must be at least 2</li>
-                           <li>Must only contain letters</li>
+                           <li>Must only contain letters, apostrophes ('), and up to one dash (-)</li>
                        </ul>
                    </div>
                </div>
@@ -318,10 +318,10 @@
            },
            {
                isInvalid: function(input) {
-                   var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
+                   var illegalCharacters = !input.value.match(/^[a-zA-Z](('){0,1}[a-zA-Z]+)+(-(('){0,1}[a-zA-Z]+)+){0,1}$/);
                    return illegalCharacters ? true : false;
                },
-               invalidityMessage: 'This input can only have letters',
+               invalidityMessage: 'This input can only have letters, apostrophes, and up to one dash (-)',
                element: document.querySelectorAll('.requirements')[0].querySelectorAll('ul > li')[1]
            }
        ]
@@ -335,10 +335,10 @@
            },
            {
                isInvalid: function(input) {
-                   var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
+                   var illegalCharacters = !input.value.match(/^[a-zA-Z](('){0,1}[a-zA-Z]+)+(-(('){0,1}[a-zA-Z]+)+){0,1}$/);
                    return illegalCharacters ? true : false;
                },
-               invalidityMessage: 'This input can only have letters',
+               invalidityMessage: 'This input can only have letters, apostrophes, and up to one dash (-)',
                element: document.querySelectorAll('.requirements')[1].querySelectorAll('ul > li')[1]
            }
        ]
